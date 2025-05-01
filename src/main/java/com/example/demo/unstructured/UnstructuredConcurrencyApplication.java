@@ -34,6 +34,7 @@ public class UnstructuredConcurrencyApplication implements Application {
     }
 
     private void writeToResponse(String a, String b, Response response) {
+        response.write("a = %s, b = %s".formatted(a, b));
     }
 
 }
