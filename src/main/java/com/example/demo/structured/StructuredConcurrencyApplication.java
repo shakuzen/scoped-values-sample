@@ -23,11 +23,11 @@ public class StructuredConcurrencyApplication implements Application {
         }
     }
 
-    private String getA(Request request) {
+    private String getA(Request ignored) {
         return Framework.readKey("a");
     }
 
-    private String getB(Request request) {
+    private String getB(Request ignored) {
         return Framework.readKey("b");
     }
 

@@ -20,7 +20,7 @@ public final class Framework {
                 .run(() -> application.handle(request, response));
     }
 
-    public static String readKey(String key) {
+    public static String readKey(String ignored) {
         checkRole();
         return "something";
     }
@@ -32,7 +32,7 @@ public final class Framework {
         }
     }
 
-    private static Role determineRole(Request request) {
+    private static Role determineRole(Request ignored) {
         return new Random().nextBoolean() ? Role.USER : Role.ADMIN;
     }
 

@@ -6,7 +6,7 @@ import com.example.demo.framework.Response;
 
 public class StructuredConcurrencyMain {
 
-    public static void main( String[] args ) {
+    static void main() {
         Framework framework = Framework.withApplication(new StructuredConcurrencyApplication());
         framework.serve(new Request(), new Response());
     }
