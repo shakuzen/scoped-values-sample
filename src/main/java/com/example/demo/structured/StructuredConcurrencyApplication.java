@@ -5,20 +5,21 @@ import com.example.demo.framework.Framework;
 import com.example.demo.framework.Request;
 import com.example.demo.framework.Response;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.StructuredTaskScope;
-import java.util.function.Supplier;
 
+import static java.util.concurrent.StructuredTaskScope.Joiner.allSuccessfulOrThrow;
+
+@SuppressWarnings("preview")
 public class StructuredConcurrencyApplication implements Application {
 
     @Override
     public void handle(Request request, Response response) {
-        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-            Supplier<String> a = scope.fork(() -> getA(request));
-            Supplier<String> b = scope.fork(() -> getB(request));
-            scope.join().throwIfFailed();
+        try (var scope = StructuredTaskScope.open(allSuccessfulOrThrow())) {
+            var a = scope.fork(() -> getA(request));
+            var b = scope.fork(() -> getB(request));
+            scope.join();
             writeToResponse(a.get(), b.get(), response);
-        } catch (ExecutionException | InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
